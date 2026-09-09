@@ -1,0 +1,40 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.uv/
+
+# Xcode / build
+# The .xcodeproj is generated from project.yml via `xcodegen generate`.
+*.xcodeproj/
+DerivedData/
+build/
+*.xcuserstate
+xcuserdata/
+*.swiftpm/
+.build/
+
+# Local reference recordings
+DemoRecordings/
+
+# Local benchmark identities, gold data, comparator exports and review evidence.
+BenchmarkData/
+
+# Local direct-audio trial evidence and native SpeechTranscriber build output.
+TrialRuns/
+tools/apple-speech-transcriber/.build/
+
+# Browser acceptance artifacts.
+output/playwright/
+
+# Agent session scratch — never belongs in the repo.
+.omo/
+.zcode/
+
+# iCloud conflict copies. CloudDocs duplicates files under ~/Documents and an
+# earlier branch committed 246 of them; the originals are always the real file.
+* 2.*
