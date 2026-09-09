@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aiwatching.local/schema/status.schema.json",
+  "title": "AIWatching native capture status",
+  "description": "The capture application marks a session complete only after its manifest and audio chunks are ready for export.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["state", "updatedAt"],
+  "properties": {
+    "state": { "enum": ["recording", "complete", "error"] },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "engine": { "type": ["string", "null"] },
+    "detail": { "type": ["string", "null"] }
+  }
+}

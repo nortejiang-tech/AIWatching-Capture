@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aiwatching.local/schema/manifest.schema.json",
+  "title": "AIWatching native capture manifest",
+  "description": "Describes one user-initiated iPhone or Apple Watch recording session.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sessionId", "source", "startedAt", "audio", "chunks"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "sessionId": { "type": "string", "description": "Session UUID." },
+    "title": { "type": ["string", "null"] },
+    "source": { "enum": ["iphone", "watch"] },
+    "device": { "type": ["string", "null"] },
+    "startedAt": { "type": "string", "format": "date-time" },
+    "endedAt": { "type": ["string", "null"], "format": "date-time" },
+    "timezone": { "type": ["string", "null"] },
+    "language": { "type": "string" },
+    "customVocabulary": { "type": "array", "items": { "type": "string" } },
+    "audio": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sampleRate", "channels", "format"],
+      "properties": {
+        "sampleRate": { "type": "integer", "minimum": 1 },
+        "channels": { "type": "integer", "minimum": 1 },
+        "format": { "type": "string" },
+        "codec": { "type": ["string", "null"] }
+      }
+    },
+    "chunks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["file", "index", "startOffsetSec", "durationSec"],
+        "properties": {
+          "file": { "type": "string", "pattern": "^audio/chunk_[0-9]{4}\\.m4a$" },
+          "index": { "type": "integer", "minimum": 0 },
+          "startOffsetSec": { "type": "number", "minimum": 0 },
+          "durationSec": { "type": "number", "minimum": 0 },
+          "startedAt": { "type": ["string", "null"], "format": "date-time" }
+        }
+      }
+    },
+    "bookmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["atSec"],
+        "properties": {
+          "id": { "type": ["string", "null"] },
+          "atSec": { "type": "number", "minimum": 0 },
+          "atTime": { "type": ["string", "null"], "format": "date-time" },
+          "note": { "type": ["string", "null"] },
+          "source": { "enum": ["iphone", "watch", null] }
+        }
+      }
+    }
+  }
+}

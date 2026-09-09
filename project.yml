@@ -1,0 +1,147 @@
+name: AIWatching
+options:
+  bundleIdPrefix: com.aiwatching
+  deploymentTarget:
+    iOS: "26.0"
+    watchOS: "26.0"
+    macOS: "26.0"
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+    WATCHOS_DEPLOYMENT_TARGET: "26.0"
+    MARKETING_VERSION: "0.5.1"
+    CURRENT_PROJECT_VERSION: "23"
+
+configs:
+  Debug: debug
+  Release: release
+  LocalDev: debug
+targets:
+  AIWatching:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources/Shared
+      - path: Sources/iOSApp
+        excludes:
+          - Info.plist
+          - "*.entitlements"
+    resources:
+      - path: Sources/iOSApp/Assets.xcassets
+    info:
+      path: Sources/iOSApp/Info.plist
+      properties:
+        CFBundleDisplayName: AIWatching
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        NSMicrophoneUsageDescription: AIWatching needs microphone access to capture your recordings.
+        UIBackgroundModes:
+          - audio
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aiwatching.app
+        CODE_SIGN_STYLE: Automatic
+        INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace: true
+        CODE_SIGN_ENTITLEMENTS: Sources/iOSApp/AIWatching.entitlements
+      configs:
+        LocalDev:
+          CODE_SIGN_ENTITLEMENTS: Sources/iOSApp/AIWatching.LocalDev.entitlements
+    dependencies:
+      - target: AIWatching Watch App
+        embed: true
+
+  AIWatching Watch App:
+    type: application
+    platform: watchOS
+    sources:
+      - path: Sources/Shared
+      - path: Sources/WatchApp
+        excludes:
+          - Info.plist
+          - "*.entitlements"
+    resources:
+      - path: Sources/WatchApp/Assets.xcassets
+    info:
+      path: Sources/WatchApp/Info.plist
+      properties:
+        CFBundleDisplayName: AIWatching
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSMicrophoneUsageDescription: AIWatching needs microphone access for Watch probe recording.
+        WKApplication: true
+        WKCompanionAppBundleIdentifier: com.aiwatching.app
+        CFBundleURLTypes:
+          - CFBundleURLName: com.aiwatching.watch
+            CFBundleURLSchemes:
+              - aiwatching
+    entitlements:
+      path: Sources/WatchApp/AIWatchingWatch.entitlements
+      properties: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aiwatching.app.watchkitapp
+        CODE_SIGN_STYLE: Automatic
+      configs:
+        LocalDev: {}
+    dependencies:
+      - target: AIWatching Watch WidgetExtension
+        embed: true
+
+  AIWatching Watch WidgetExtension:
+    type: app-extension
+    platform: watchOS
+    sources:
+      - path: Sources/WatchWidget
+    info:
+      path: Sources/WatchWidget/Info.plist
+      properties:
+        CFBundleDisplayName: AIWatching
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aiwatching.app.watchkitapp.widget
+        CODE_SIGN_STYLE: Automatic
+      configs:
+        LocalDev: {}
+
+  AIWatchingTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/AIWatchingTests
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.aiwatching.app.tests
+    dependencies:
+      - target: AIWatching
+
+schemes:
+  AIWatching:
+    build:
+      targets:
+        AIWatching: all
+  AIWatching-LocalDev:
+    build:
+      targets:
+        AIWatching: all
+    run:
+      config: LocalDev
+    test:
+      config: LocalDev
+    profile:
+      config: LocalDev
+    analyze:
+      config: LocalDev
+  AIWatchingTests:
+    build:
+      targets:
+        AIWatching: all
+    test:
+      targets:
+        - AIWatchingTests

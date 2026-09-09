@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "sessionId": "5f3c0b2e-9a1d-4a7e-8c2b-1e6f0a4d7b90",
+  "title": "meeting",
+  "source": "iphone",
+  "device": "iPhone17,2",
+  "startedAt": "2026-07-09T14:03:22Z",
+  "endedAt": "2026-07-09T14:13:09Z",
+  "timezone": "Asia/Shanghai",
+  "language": "auto",
+  "customVocabulary": ["AIWatching"],
+  "audio": { "sampleRate": 16000, "channels": 1, "format": "m4a-aac", "codec": "aac" },
+  "chunks": [
+    { "file": "audio/chunk_0000.m4a", "index": 0, "startOffsetSec": 0.0, "durationSec": 300.0, "startedAt": "2026-07-09T14:03:22Z" },
+    { "file": "audio/chunk_0001.m4a", "index": 1, "startOffsetSec": 300.0, "durationSec": 287.0, "startedAt": "2026-07-09T14:08:22Z" }
+  ],
+  "bookmarks": [
+    { "id": "b1", "atSec": 742.0, "atTime": "2026-07-09T14:15:44Z", "note": "决定要点", "source": "watch" }
+  ]
+}
